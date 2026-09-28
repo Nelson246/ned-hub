@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - NED HUB</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .register-container {
+        width: 100%;
+        max-width: 450px;
+        background: white;
+        padding: 35px;
+        border-radius: 16px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .logo h1 {
+        color: #1479ff;
+        font-size: 32px;
+    }
+
+    .logo p {
+        color: #666;
+        margin-top: 5px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #111827;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: #1479ff;
+        box-shadow: 0 0 0 3px rgba(20, 121, 255, 0.1);
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background: #1479ff;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+    button:hover {
+        background: #0968e8;
+    }
+
+    button:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+    }
+
+    .message {
+        margin-top: 18px;
+        padding: 12px;
+        border-radius: 8px;
+        display: none;
+        text-align: center;
+    }
+
+    .success {
+        display: block;
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .error {
+        display: block;
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 22px;
+        color: #555;
+    }
+
+    .login-link a {
+        color: #1479ff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .password-note {
+        font-size: 12px;
+        color: #777;
+        margin-top: 5px;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="register-container">
+
+    <div class="logo">
+        <h1>NED HUB</h1>
+        <p>Your trusted online shop</p>
+    </div>
+
+    <h2>Create Your Account</h2>
+
+    <form id="registerForm">
+
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="example@email.com"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="e.g. 024 123 4567"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+                minlength="6"
+                required
+            >
+            <div class="password-note">
+                Password must contain at least 6 characters.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Enter your password again"
+                minlength="6"
+                required
+            >
+        </div>
+
+        <button type="submit" id="registerButton">
+            Create Account
+        </button>
+
+    </form>
+
+    <div id="message" class="message"></div>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="login.html">Login</a>
+    </div>
+
+</div>
+
+<script>
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+    const button = document.getElementById("registerButton");
+
+    form.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        message.className = "message";
+        message.textContent = "";
+
+        if (password !== confirmPassword) {
+            message.classList.add("error");
+            message.textContent = "Passwords do not match.";
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = "Creating account...";
+
+        try {
+
+            const response = await fetch("/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+           if (data.success) {
+
+             alert(data.message);
+
+            window.location.href =
+                   "/verify.html";
+            
+                   message.textContent =
+                    "Account created successfully!";
+
+                form.reset();
+
+            } else {
+
+                message.classList.add("error");
+                message.textContent = data.message;
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.classList.add("error");
+            message.textContent =
+                "Unable to connect to the server.";
+
+        } finally {
+
+            button.disabled = false;
+            button.textContent = "Create Account";
+
+        }
+
+    });
+</script>
+```
+
+</body>
+</html>

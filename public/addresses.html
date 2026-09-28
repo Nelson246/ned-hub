@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Addresses - NED HUB</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #1479ff;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .address-form,
+        .address-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .address-form h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            border: none;
+            background: #1479ff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0965db;
+        }
+
+        .address-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .address-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .actions {
+            margin-top: 15px;
+        }
+
+        .delete-btn {
+            background: #e53935;
+            margin-left: 8px;
+        }
+
+        .delete-btn:hover {
+            background: #c62828;
+        }
+
+        .default {
+            display: inline-block;
+            background: #e5ffe9;
+            color: #08751c;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            background: #e5ffe9;
+            color: #08751c;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #c00;
+        }
+
+        #addressList {
+            margin-top: 25px;
+        }
+
+        .empty {
+            color: #666;
+            text-align: center;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">NED HUB</div>
+    <a href="/account.html" class="back-btn">← My Account</a>
+</header>
+
+<div class="container">
+
+    <h1>My Addresses</h1>
+
+    <div id="message" class="message"></div>
+
+    <div class="address-form">
+
+        <h2>Add New Address</h2>
+
+        <form id="addressForm">
+
+            <div class="form-group">
+               <label for="fullName">Full Name</label>
+<input
+    type="text"
+    id="fullName"
+    placeholder="Enter the recipient's full name"
+    required
+>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Full Address</label>
+                <textarea
+                    id="address"
+                    placeholder="Enter your full delivery address"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <input
+                    type="text"
+                    id="city"
+                    placeholder="e.g. Accra"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="region">Region</label>
+                <input
+                    type="text"
+                    id="region"
+                    placeholder="e.g. Greater Accra"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Save Address
+            </button>
+
+        </form>
+
+    </div>
+
+    <h2>Saved Addresses</h2>
+
+    <div id="addressList">
+        <p class="empty">Loading addresses...</p>
+    </div>
+
+</div>
+
+<script>
+
+async function loadAddresses() {
+
+    try {
+
+        const response = await fetch("/api/addresses", {
+            credentials: "include"
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+            window.location.href = "/login.html";
+            return;
+        }
+
+        const addressList = document.getElementById("addressList");
+
+        if (!data.addresses || data.addresses.length === 0) {
+
+            addressList.innerHTML = `
+                <div class="address-card">
+                    <p class="empty">
+                        You have no saved addresses yet.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+        addressList.innerHTML = "";
+
+        data.addresses.forEach(address => {
+
+            const card = document.createElement("div");
+
+            card.className = "address-card";
+
+            card.innerHTML = `
+                <h3>${address.full_name}</h3>
+                <p>
+                    ${address.address}
+                </p>
+
+                <p>
+                    ${address.city}, ${address.region}
+                </p>
+
+                ${
+                    address.is_default
+                    ? `<span class="default">Default Address</span>`
+                    : ""
+                }
+
+                <div class="actions">
+
+                    ${
+                        !address.is_default
+                        ? `<button onclick="setDefault(${address.id})">
+                            Set as Default
+                           </button>`
+                        : ""
+                    }
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteAddress(${address.id})">
+                        Delete
+                    </button>
+
+                </div>
+            `;
+
+            addressList.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Unable to load your addresses.",
+            "error"
+        );
+
+    }
+
+}
+
+
+document.getElementById("addressForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const fullName =
+    document.getElementById("fullName").value.trim();
+
+        const address =
+            document.getElementById("address").value.trim();
+
+        const city =
+            document.getElementById("city").value.trim();
+
+        const region =
+            document.getElementById("region").value.trim();
+
+        try {
+
+            const response = await fetch("/api/addresses", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "include",
+
+               body: JSON.stringify({
+    full_name: fullName,
+    address: address,
+    city: city,
+    region: region
+})
+
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+
+                showMessage(
+                    data.message || "Failed to save address.",
+                    "error"
+                );
+
+                return;
+            }
+
+            showMessage(
+                "Address saved successfully.",
+                "success"
+            );
+
+            document.getElementById("addressForm").reset();
+
+            loadAddresses();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Something went wrong.",
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+async function setDefault(id) {
+
+    try {
+
+        const response = await fetch(
+            `/api/addresses/${id}/default`,
+            {
+                method: "PUT",
+                credentials: "include"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            showMessage(
+                data.message || "Failed to set default address.",
+                "error"
+            );
+
+            return;
+        }
+
+        showMessage(
+            "Default address updated.",
+            "success"
+        );
+
+        loadAddresses();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Something went wrong.",
+            "error"
+        );
+
+    }
+
+}
+
+
+async function deleteAddress(id) {
+
+    if (!confirm("Are you sure you want to delete this address?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/addresses/${id}`,
+            {
+                method: "DELETE",
+                credentials: "include"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            showMessage(
+                data.message || "Failed to delete address.",
+                "error"
+            );
+
+            return;
+        }
+
+        showMessage(
+            "Address deleted.",
+            "success"
+        );
+
+        loadAddresses();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Something went wrong.",
+            "error"
+        );
+
+    }
+
+}
+
+
+function showMessage(text, type) {
+
+    const message =
+        document.getElementById("message");
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+
+    message.style.display = "block";
+
+    setTimeout(() => {
+        message.style.display = "none";
+    }, 3000);
+
+}
+
+
+loadAddresses();
+
+</script>
+<script src="/js/site-settings.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,610 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account - NED HUB</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        header {
+            background: #071a33;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #4da3ff;
+        }
+
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .logout-btn {
+            background: #e53935;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .welcome h1 {
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #666;
+            margin-top: 6px;
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #777;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #c00;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .welcome {
+                padding: 22px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        <a href="/">
+            <span data-shop-name>NED HUB</span>
+        </a>
+    </div>
+
+    <button
+        class="logout-btn"
+        id="logoutBtn"
+    >
+        Logout
+    </button>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <div
+        id="loading"
+        class="loading"
+    >
+        Loading your account...
+    </div>
+
+
+
+    <div
+        id="accountContent"
+        style="display:none;"
+    >
+
+
+        <!-- CUSTOMER INFORMATION -->
+
+        <div class="welcome">
+
+            <h1>
+                Welcome,
+                <span id="customerName"></span>
+                👋
+            </h1>
+
+            <p>
+                <strong>Email:</strong>
+                <span id="customerEmail"></span>
+            </p>
+
+            <p id="phoneRow" style="display:none;">
+                <strong>Phone:</strong>
+                <span id="customerPhone"></span>
+            </p>
+
+        </div>
+
+
+
+        <!-- ACCOUNT OPTIONS -->
+
+        <!-- ACCOUNT OPTIONS -->
+
+<div class="account-grid">
+
+
+    <!-- PROFILE -->
+
+    <a
+        href="/profile.html"
+        class="card"
+    >
+
+        <div class="icon">
+            👤
+        </div>
+
+        <h3>
+            My Profile
+        </h3>
+
+        <p>
+            Manage your personal information.
+        </p>
+
+    </a>
+
+
+
+    <!-- ADDRESSES -->
+
+    <a
+        href="/addresses.html"
+        class="card"
+    >
+
+        <div class="icon">
+            📍
+        </div>
+
+        <h3>
+            My Addresses
+        </h3>
+
+        <p>
+            Manage your delivery addresses.
+        </p>
+
+    </a>
+
+
+
+    <!-- ORDERS -->
+
+    <a
+        href="/orders.html"
+        class="card"
+    >
+
+        <div class="icon">
+            📦
+        </div>
+
+        <h3>
+            My Orders
+        </h3>
+
+        <p>
+            View your orders and order status.
+        </p>
+
+    </a>
+
+
+
+    <!-- CART -->
+
+    <a
+        href="/cart.html"
+        class="card"
+    >
+
+        <div class="icon">
+            🛒
+        </div>
+
+        <h3>
+            Shopping Cart
+        </h3>
+
+        <p>
+            View items currently in your cart.
+        </p>
+
+    </a>
+
+
+
+    <!-- SECURITY -->
+
+    <a
+        href="/security.html"
+        class="card"
+    >
+
+        <div class="icon">
+            🔐
+        </div>
+
+        <h3>
+            Security
+        </h3>
+
+        <p>
+            Change your password and manage password reset options.
+        </p>
+
+    </a>
+
+
+
+    <!-- CUSTOMER CARE -->
+
+    <a
+        href="/customer-care.html"
+        class="card"
+    >
+
+        <div class="icon">
+            💬
+        </div>
+
+        <h3>
+            Customer Care
+        </h3>
+
+        <p>
+            Chat with NED HUB admin for help and support.
+        </p>
+
+    </a>
+
+
+</div>
+
+        
+            <!-- CART -->
+
+            <a
+                href="/cart.html"
+                class="card"
+            >
+
+                <div class="icon">
+                    🛒
+                </div>
+
+                <h3>
+                    Shopping Cart
+                </h3>
+
+                <p>
+                    View items currently in your cart.
+                </p>
+
+            </a>
+
+
+
+            <!-- SECURITY -->
+
+            <a
+                href="/security.html"
+                class="card"
+            >
+
+                <div class="icon">
+                    🔐
+                </div>
+
+                <h3>
+                    Security
+                </h3>
+
+                <p>
+                    Manage your account security.
+                </p>
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+// ==========================================
+// LOAD CUSTOMER ACCOUNT
+// ==========================================
+
+async function loadAccount() {
+
+    try {
+
+        const response = await fetch(
+            "/api/account",
+            {
+                credentials: "include"
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            window.location.href =
+                "/login.html";
+
+            return;
+
+        }
+
+
+        const customer =
+            data.customer;
+
+
+        if (!customer) {
+
+            throw new Error(
+                "Customer information was not returned."
+            );
+
+        }
+
+
+        // NAME
+
+        document.getElementById(
+            "customerName"
+        ).textContent =
+            customer.name || "";
+
+
+        // EMAIL
+
+        document.getElementById(
+            "customerEmail"
+        ).textContent =
+            customer.email || "";
+
+
+        // PHONE
+
+        if (customer.phone) {
+
+            document.getElementById(
+                "customerPhone"
+            ).textContent =
+                customer.phone;
+
+            document.getElementById(
+                "phoneRow"
+            ).style.display =
+                "block";
+
+        }
+
+
+        // SHOW ACCOUNT
+
+        document.getElementById(
+            "loading"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "accountContent"
+        ).style.display =
+            "block";
+
+
+    } catch (error) {
+
+        console.error(
+            "Account loading error:",
+            error
+        );
+
+
+        document.getElementById(
+            "loading"
+        ).innerHTML = `
+
+            <div class="error">
+
+                Unable to load your account.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async function () {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/logout",
+                        {
+                            method: "POST",
+                            credentials: "include"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (data.success) {
+
+                    window.location.href =
+                        "/login.html";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+
+// ==========================================
+// LOAD ACCOUNT
+// ==========================================
+
+loadAccount();
+
+</script>
+
+
+
+<!-- GLOBAL SHOP SETTINGS -->
+
+<script src="/js/site-settings.js"></script>
+
+
+</body>
+
+</html>
+```

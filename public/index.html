@@ -1,0 +1,4593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NED HUB | Shop</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+
+:root {
+
+    --ned-primary: #0080ff;
+    --ned-secondary: #00aaff;
+    --ned-accent: #ffd700;
+
+    --ned-header: #071a33;
+    --ned-background: #f5f7fb;
+
+    --ned-button: #0080ff;
+    --ned-button-text: #ffffff;
+
+    --ned-gradient-1: #071a33;
+    --ned-gradient-2: #0080ff;
+    --ned-gradient-3: #00aaff;
+
+    --ned-text: #111827;
+    --ned-card: #ffffff;
+    --ned-border: #eeeeee;
+    --ned-muted: #555555;
+
+    --ned-glow: none;
+
+    --ned-effect-opacity: 1;
+
+    --ned-gradient-speed: 4s;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    background: var(--ned-background);
+
+    color: var(--ned-text);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+[data-theme="dark"] body {
+
+    background: var(--ned-background);
+
+    color: var(--ned-text);
+
+}
+
+[data-theme="dark"] input {
+
+    background: var(--ned-card);
+
+    color: var(--ned-text);
+
+    border-color: var(--ned-border);
+
+}
+
+[data-theme="dark"] .category-btn,
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .cart-box,
+[data-theme="dark"] .website-content-section {
+
+    background: var(--ned-card);
+
+    color: var(--ned-text);
+
+}
+
+[data-theme="dark"] .category-btn {
+
+    border: 1px solid var(--ned-border);
+
+}
+
+[data-theme="dark"] .website-content-text h2,
+[data-theme="dark"] .product-name,
+[data-theme="dark"] .section-title {
+
+    color: var(--ned-text);
+
+}
+
+[data-theme="dark"] .website-content-text p {
+
+    color: var(--ned-muted);
+
+}
+
+[data-theme="dark"] .cart-item {
+
+    border-color: var(--ned-border);
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+
+    background: var(--ned-header);
+
+    color: white;
+
+    padding: 15px 5%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    transition:
+        background 0.3s ease,
+        filter 0.3s ease;
+
+}
+
+
+/* =========================================================
+   HEADER ANIMATION
+========================================================= */
+
+.ned-animated-header header {
+
+    animation:
+        nedHeaderPulse
+        3s
+        ease-in-out
+        infinite;
+
+}
+
+@keyframes nedHeaderPulse {
+
+    0% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.08);
+    }
+
+    100% {
+        filter: brightness(1);
+    }
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    color: var(--ned-primary);
+
+    white-space: nowrap;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-box {
+
+    flex: 1;
+
+    max-width: 600px;
+
+    display: flex;
+
+}
+
+.search-box input {
+
+    width: 100%;
+
+    padding: 12px 15px;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 7px 0 0 7px;
+
+    font-size: 15px;
+
+}
+
+.search-box button {
+
+    padding: 12px 18px;
+
+    border: none;
+
+    background: var(--ned-button);
+
+    color: var(--ned-button-text);
+
+    cursor: pointer;
+
+    border-radius: 0 7px 7px 0;
+
+    transition: 0.25s ease;
+
+}
+
+.search-box button:hover {
+
+    box-shadow: var(--ned-glow);
+
+}
+
+
+/* =========================================================
+   HEADER LINKS
+========================================================= */
+
+.header-links {
+
+    display: flex;
+
+    gap: 15px;
+
+    align-items: center;
+
+}
+
+.header-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+}
+
+.cart-btn {
+
+    background: var(--ned-button);
+
+    padding: 10px 15px;
+
+    border-radius: 7px;
+
+    transition: 0.25s ease;
+
+}
+
+.cart-btn:hover {
+
+    box-shadow: var(--ned-glow);
+
+}
+
+
+/* =========================================================
+   BANNERS
+========================================================= */
+
+.banner-section {
+
+    width: 100%;
+
+    background: var(--ned-header);
+
+}
+
+.banner-container {
+
+    width: 100%;
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+.banner-slider {
+
+    width: 100%;
+
+    position: relative;
+
+}
+
+.banner-slide {
+
+    display: none;
+
+    position: relative;
+
+    width: 100%;
+
+    height: 430px;
+
+    overflow: hidden;
+
+}
+
+.banner-slide.active {
+
+    display: block;
+
+}
+
+.banner-slide img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+.banner-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,0.75),
+            rgba(0,0,0,0.35),
+            rgba(0,0,0,0.1)
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 50px 8%;
+
+}
+
+.banner-content {
+
+    max-width: 600px;
+
+    color: white;
+
+}
+
+.banner-content h1 {
+
+    font-size: 42px;
+
+    margin-bottom: 15px;
+
+}
+
+.banner-content p {
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+
+}
+
+.banner-button {
+
+    display: inline-block;
+
+    background: var(--ned-accent);
+
+    color: var(--ned-header);
+
+    padding: 13px 25px;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.25s ease;
+
+}
+
+.banner-button:hover {
+
+    opacity: 0.9;
+
+    box-shadow: var(--ned-glow);
+
+}
+
+
+/* =========================================================
+   BANNER ARROWS
+========================================================= */
+
+.banner-arrow {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 45px;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(0,0,0,0.45);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+}
+
+.banner-arrow:hover {
+
+    background: rgba(0,0,0,0.75);
+
+}
+
+.banner-prev {
+
+    left: 20px;
+
+}
+
+.banner-next {
+
+    right: 20px;
+
+}
+
+
+/* =========================================================
+   BANNER DOTS
+========================================================= */
+
+.banner-dots {
+
+    position: absolute;
+
+    bottom: 18px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 8px;
+
+    z-index: 5;
+
+}
+
+.banner-dot {
+
+    width: 10px;
+
+    height: 10px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: rgba(255,255,255,0.55);
+
+    cursor: pointer;
+
+}
+
+.banner-dot.active {
+
+    background: white;
+
+    transform: scale(1.2);
+
+}
+
+
+/* =========================================================
+   BANNER MESSAGE
+========================================================= */
+
+.banner-message {
+
+    min-height: 120px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--ned-gradient-1),
+            var(--ned-gradient-2),
+            var(--ned-gradient-3)
+        );
+
+}
+
+
+/* =========================================================
+   DEFAULT HERO
+========================================================= */
+
+.default-hero {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--ned-gradient-1),
+            var(--ned-gradient-2),
+            var(--ned-gradient-3)
+        );
+
+    color: white;
+
+    padding: 60px 5%;
+
+    text-align: center;
+
+}
+
+.default-hero h1 {
+
+    font-size: 42px;
+
+    margin-bottom: 12px;
+
+}
+
+.default-hero p {
+
+    font-size: 18px;
+
+    margin-bottom: 25px;
+
+}
+
+.shop-btn {
+
+    display: inline-block;
+
+    background: var(--ned-accent);
+
+    color: var(--ned-header);
+
+    padding: 13px 25px;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.25s ease;
+
+}
+
+.shop-btn:hover {
+
+    box-shadow: var(--ned-glow);
+
+}
+
+
+/* =========================================================
+   GRADIENT ANIMATION
+========================================================= */
+
+.ned-gradient-animation .banner-message,
+.ned-gradient-animation .default-hero {
+
+    background-size: 300% 300%;
+
+    animation:
+        nedGradientMove
+        var(--ned-gradient-speed)
+        ease
+        infinite;
+
+}
+
+@keyframes nedGradientMove {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section {
+
+    padding: 35px 5%;
+
+}
+
+.section-title {
+
+    font-size: 25px;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+.categories {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+}
+
+.category-btn {
+
+    border: none;
+
+    background: var(--ned-card);
+
+    color: var(--ned-text);
+
+    padding: 12px 18px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.08);
+
+    font-size: 14px;
+
+    transition: 0.25s ease;
+
+}
+
+.category-btn:hover,
+.category-btn.active {
+
+    background: var(--ned-primary);
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.products-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(220px, 1fr)
+        );
+
+    gap: 20px;
+
+}
+
+.product-card {
+
+    background: var(--ned-card);
+
+    color: var(--ned-text);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+    transition: 0.2s;
+
+}
+
+.product-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.12);
+
+}
+
+.product-click-area {
+
+    cursor: pointer;
+
+}
+
+.product-image {
+
+    width: 100%;
+
+    height: 210px;
+
+    object-fit: cover;
+
+    background: #eee;
+
+    display: block;
+
+}
+
+.product-info {
+
+    padding: 15px;
+
+}
+
+.product-category {
+
+    color: var(--ned-primary);
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
+}
+
+.product-name {
+
+    font-size: 17px;
+
+    margin-bottom: 10px;
+
+}
+
+.product-price {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: var(--ned-header);
+
+    margin-bottom: 8px;
+
+}
+
+[data-theme="dark"] .product-price {
+
+    color: var(--ned-accent);
+
+}
+
+.product-stock {
+
+    font-size: 13px;
+
+    color: var(--ned-muted);
+
+    margin-bottom: 12px;
+
+}
+
+.add-cart-btn {
+
+    width: 100%;
+
+    border: none;
+
+    background: var(--ned-button);
+
+    color: var(--ned-button-text);
+
+    padding: 11px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.25s ease;
+
+}
+
+.add-cart-btn:hover {
+
+    background: var(--ned-primary);
+
+    box-shadow: var(--ned-glow);
+
+}
+
+.out-stock {
+
+    background: #999 !important;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =========================================================
+   WEBSITE CONTENT
+========================================================= */
+
+.website-sections {
+
+    width: 100%;
+
+}
+
+.website-content-section {
+
+    padding: 70px 6%;
+
+    background: var(--ned-card);
+
+    color: var(--ned-text);
+
+}
+
+.website-content-inner {
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 50px;
+
+}
+
+.website-content-inner.reverse {
+
+    flex-direction: row-reverse;
+
+}
+
+.website-content-text {
+
+    flex: 1;
+
+}
+
+.website-content-text h2 {
+
+    font-size: 38px;
+
+    margin-bottom: 18px;
+
+    color: var(--ned-text);
+
+}
+
+.website-content-text p {
+
+    font-size: 17px;
+
+    line-height: 1.7;
+
+    color: var(--ned-muted);
+
+    margin-bottom: 25px;
+
+}
+
+.website-content-button {
+
+    display: inline-block;
+
+    padding: 13px 25px;
+
+    background: var(--ned-button);
+
+    color: var(--ned-button-text) !important;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    transition: 0.25s ease;
+
+}
+
+.website-content-button:hover {
+
+    box-shadow: var(--ned-glow);
+
+}
+
+.website-content-image {
+
+    flex: 1;
+
+}
+
+.website-content-image img {
+
+    width: 100%;
+
+    max-height: 400px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart-box {
+
+    background: var(--ned-card);
+
+    color: var(--ned-text);
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+}
+
+.cart-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid var(--ned-border);
+
+    flex-wrap: wrap;
+
+}
+
+.cart-item-image {
+
+    width: 80px;
+
+    height: 80px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+}
+
+.cart-item-info {
+
+    flex: 1;
+
+    min-width: 150px;
+
+}
+
+.quantity-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+.quantity-btn {
+
+    width: 32px;
+
+    height: 32px;
+
+    border: none;
+
+    background: #eee;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+}
+
+.quantity-btn.plus {
+
+    background: var(--ned-button);
+
+    color: white;
+
+}
+
+.remove-btn {
+
+    border: none;
+
+    background: #dc3545;
+
+    color: white;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+.cart-summary {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding-top: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+.checkout-btn {
+
+    border: none;
+
+    background: var(--ned-button);
+
+    color: var(--ned-button-text);
+
+    padding: 13px 25px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.25s ease;
+
+}
+
+.checkout-btn:hover {
+
+    box-shadow: var(--ned-glow);
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message {
+
+    text-align: center;
+
+    padding: 40px;
+
+    color: var(--ned-muted);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    background: var(--ned-header);
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+
+    margin-top: 30px;
+
+}
+
+footer h3 {
+
+    color: var(--ned-primary);
+
+    margin-bottom: 8px;
+
+}
+
+
+/* =========================================================
+   SOCIAL LINKS
+========================================================= */
+
+.social-links {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    flex-wrap: wrap;
+
+}
+
+.social-links a {
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 42px;
+
+    height: 38px;
+
+    padding: 0 12px;
+
+    border-radius: 7px;
+
+    background: rgba(255,255,255,0.1);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.25s ease;
+
+}
+
+.social-links a:hover {
+
+    background: var(--ned-button);
+
+    box-shadow: var(--ned-glow);
+
+}
+
+
+/* =========================================================
+   ANIMATED BUTTONS
+========================================================= */
+
+.ned-animated-buttons button,
+.ned-animated-buttons .add-cart-btn,
+.ned-animated-buttons .checkout-btn,
+.ned-animated-buttons .cart-btn,
+.ned-animated-buttons .shop-btn,
+.ned-animated-buttons .banner-button,
+.ned-animated-buttons .website-content-button {
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+.ned-animated-buttons button:hover,
+.ned-animated-buttons .add-cart-btn:hover,
+.ned-animated-buttons .checkout-btn:hover,
+.ned-animated-buttons .cart-btn:hover,
+.ned-animated-buttons .shop-btn:hover,
+.ned-animated-buttons .banner-button:hover,
+.ned-animated-buttons .website-content-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--ned-glow);
+
+}
+
+
+/* =========================================================
+   FLOATING BLOBS
+========================================================= */
+
+.ned-floating-blobs::before,
+.ned-floating-blobs::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 220px;
+
+    height: 220px;
+
+    border-radius: 50%;
+
+    background: var(--ned-accent);
+
+    opacity:
+        calc(
+            0.12 *
+            var(--ned-effect-opacity)
+        );
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    animation:
+        nedFloatBlob
+        8s
+        ease-in-out
+        infinite;
+
+}
+
+.ned-floating-blobs::before {
+
+    top: 15%;
+
+    left: -80px;
+
+}
+
+.ned-floating-blobs::after {
+
+    bottom: 10%;
+
+    right: -80px;
+
+    animation-delay: 2s;
+
+}
+
+@keyframes nedFloatBlob {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-35px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    header {
+
+        flex-wrap: wrap;
+
+    }
+
+    .search-box {
+
+        order: 3;
+
+        width: 100%;
+
+        max-width: none;
+
+    }
+
+    .banner-slide {
+
+        height: 330px;
+
+    }
+
+    .banner-overlay {
+
+        padding: 30px 7%;
+
+    }
+
+    .banner-content h1 {
+
+        font-size: 30px;
+
+    }
+
+    .banner-content p {
+
+        font-size: 15px;
+
+    }
+
+    .banner-arrow {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 20px;
+
+    }
+
+    .default-hero h1 {
+
+        font-size: 30px;
+
+    }
+
+    .default-hero {
+
+        padding: 45px 20px;
+
+    }
+
+    .products-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 12px;
+
+    }
+
+    .product-image {
+
+        height: 160px;
+
+    }
+
+    .product-name {
+
+        font-size: 14px;
+
+    }
+
+    .product-price {
+
+        font-size: 17px;
+
+    }
+
+    .header-links {
+
+        gap: 8px;
+
+    }
+
+    .website-content-inner,
+    .website-content-inner.reverse {
+
+        flex-direction: column;
+
+    }
+
+    .website-content-text h2 {
+
+        font-size: 30px;
+
+    }
+
+    .website-content-image {
+
+        width: 100%;
+
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    .products-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .banner-slide {
+
+        height: 300px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div
+        class="logo"
+        data-store-name
+    >
+        NED HUB
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+        >
+
+        <button
+            type="button"
+            onclick="searchProducts()"
+        >
+            Search
+        </button>
+
+    </div>
+
+
+    <div class="header-links">
+
+        <div id="userArea">
+
+            <a href="/login.html">
+                Login
+            </a>
+
+            <a href="/register.html">
+                Register
+            </a>
+
+        </div>
+
+        <a href="/cart.html" class="cart-btn">
+    🛒 Cart
+    (<span id="cartCount">0</span>)
+</a>
+       
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     BANNERS
+========================================================= -->
+
+<section class="banner-section">
+
+    <div
+        id="bannerContainer"
+        class="banner-container"
+    >
+
+        <div class="banner-message">
+            Loading banners...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WEBSITE SECTIONS
+========================================================= -->
+
+
+<!-- WEBSITE SECTIONS -->
+<section
+    class="section"
+    id="websiteSectionsSection"
+>
+    ...
+</section>
+
+<!-- =========================================================
+     DEFAULT HERO
+========================================================= -->
+
+<section
+    id="defaultHero"
+    class="default-hero"
+    style="display:none;"
+>
+
+    <h1>
+        Welcome to NED HUB
+    </h1>
+
+    <p>
+        Your trusted online shop for electronics,
+        computers, accessories and more.
+    </p>
+
+    <a
+        href="#products"
+        class="shop-btn"
+    >
+        Shop Now
+    </a>
+
+</section>
+
+
+<!-- =========================================================
+     CATEGORIES
+========================================================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Shop by Category
+    </h2>
+
+    <div
+        id="categories"
+        class="categories"
+    >
+
+        <button
+            type="button"
+            class="category-btn active"
+            onclick="filterCategory('all', this)"
+        >
+            All Products
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PRODUCTS
+========================================================= -->
+
+<section
+    class="section"
+    id="products"
+>
+
+    <h2 class="section-title">
+        Products
+    </h2>
+
+    <div
+        id="productsGrid"
+        class="products-grid"
+    >
+
+        <div class="message">
+            Loading products...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CART
+========================================================= -->
+
+<section
+    class="section"
+    id="cart">
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <h3 data-store-name>
+        NED HUB
+    </h3>
+
+    <p data-store-tagline>
+        Your online shopping destination.
+    </p>
+
+    <p
+        data-store-phone
+        style="margin-top:10px;"
+    ></p>
+
+    <p
+        data-store-email
+        style="margin-top:5px;"
+    ></p>
+
+    <p
+        data-store-address
+        style="margin-top:5px;"
+    ></p>
+
+
+    <div class="social-links">
+
+        <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-facebook
+        >
+            Facebook
+        </a>
+
+        <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-instagram
+        >
+            Instagram
+        </a>
+
+        <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-tiktok
+        >
+            TikTok
+        </a>
+
+        <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-whatsapp
+        >
+            WhatsApp
+        </a>
+
+    </div>
+
+
+    <p style="margin-top:15px;">
+        © 2026 NED HUB. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let allProducts = [];
+
+let selectedCategory = "all";
+
+let banners = [];
+
+let currentBanner = 0;
+
+let bannerTimer = null;
+
+let websiteSettings = {};
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("nedHubCart")
+    ) || [];
+
+
+/* =========================================================
+   HELPER FUNCTIONS
+========================================================= */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+function escapeWebsiteHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function escapeWebsiteAttribute(value) {
+
+    return escapeWebsiteHTML(value);
+
+}
+
+
+function settingIsTrue(value) {
+
+    return String(value ?? "")
+        .toLowerCase()
+        .trim() === "true";
+
+}
+
+
+function settingIsNo(value) {
+
+    return String(value ?? "")
+        .toLowerCase()
+        .trim() === "no";
+
+}
+
+
+/* =========================================================
+   BANNERS
+========================================================= */
+
+async function loadBanners() {
+
+    const container =
+        document.getElementById(
+            "bannerContainer"
+        );
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/banners"
+            );
+
+        const data =
+            await response.json();
+
+        if (
+            !data.success ||
+            !Array.isArray(data.banners) ||
+            data.banners.length === 0
+        ) {
+
+            showDefaultHero();
+
+            return;
+
+        }
+
+        banners =
+            data.banners;
+
+        renderBanners();
+
+    } catch (error) {
+
+        console.error(
+            "Banner loading error:",
+            error
+        );
+
+        showDefaultHero();
+
+    }
+
+}
+
+
+/* =========================================================
+   DEFAULT HERO
+========================================================= */
+
+function showDefaultHero() {
+
+    clearInterval(
+        bannerTimer
+    );
+
+    bannerTimer = null;
+
+    const container =
+        document.getElementById(
+            "bannerContainer"
+        );
+
+    if (container) {
+
+        container.innerHTML = "";
+
+    }
+
+    const hero =
+        document.getElementById(
+            "defaultHero"
+        );
+
+    if (hero) {
+
+        hero.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER BANNERS
+========================================================= */
+
+function renderBanners() {
+
+    const container =
+        document.getElementById(
+            "bannerContainer"
+        );
+
+    const hero =
+        document.getElementById(
+            "defaultHero"
+        );
+
+    if (hero) {
+
+        hero.style.display =
+            "none";
+
+    }
+
+    if (!banners.length) {
+
+        showDefaultHero();
+
+        return;
+
+    }
+
+    clearInterval(
+        bannerTimer
+    );
+
+    bannerTimer = null;
+
+    let html = `
+        <div class="banner-slider">
+    `;
+
+
+    banners.forEach(
+        (banner, index) => {
+
+            html += `
+
+                <div
+                    class="banner-slide ${
+                        index === 0
+                            ? "active"
+                            : ""
+                    }"
+                >
+
+                    <img
+                        src="${escapeWebsiteAttribute(
+                            banner.image
+                        )}"
+                        alt="${escapeWebsiteAttribute(
+                            banner.title ||
+                            "NED HUB Banner"
+                        )}"
+                    >
+
+                    <div class="banner-overlay">
+
+                        <div class="banner-content">
+
+                            ${
+                                banner.title
+                                ? `
+                                    <h1>
+                                        ${escapeHtml(
+                                            banner.title
+                                        )}
+                                    </h1>
+                                `
+                                : ""
+                            }
+
+                            ${
+                                banner.description
+                                ? `
+                                    <p>
+                                        ${escapeHtml(
+                                            banner.description
+                                        )}
+                                    </p>
+                                `
+                                : ""
+                            }
+
+                            ${
+                                banner.button_text
+                                ? `
+                                    <a
+                                        href="${escapeWebsiteAttribute(
+                                            banner.button_link ||
+                                            "#products"
+                                        )}"
+                                        class="banner-button"
+                                    >
+                                        ${escapeHtml(
+                                            banner.button_text
+                                        )}
+                                    </a>
+                                `
+                                : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    if (banners.length > 1) {
+
+        html += `
+
+            <button
+                type="button"
+                class="banner-arrow banner-prev"
+                onclick="previousBanner()"
+                aria-label="Previous banner"
+            >
+                ❮
+            </button>
+
+            <button
+                type="button"
+                class="banner-arrow banner-next"
+                onclick="nextBanner()"
+                aria-label="Next banner"
+            >
+                ❯
+            </button>
+
+            <div class="banner-dots">
+
+        `;
+
+
+        banners.forEach(
+            (banner, index) => {
+
+                html += `
+
+                    <button
+                        type="button"
+                        class="banner-dot ${
+                            index === 0
+                                ? "active"
+                                : ""
+                        }"
+                        onclick="showBanner(${index})"
+                        aria-label="Go to banner ${index + 1}"
+                    ></button>
+
+                `;
+
+            }
+        );
+
+
+        html += `
+            </div>
+        `;
+
+    }
+
+
+    html += `
+        </div>
+    `;
+
+
+    container.innerHTML =
+        html;
+
+
+    currentBanner = 0;
+
+
+    if (banners.length > 1) {
+
+        startBannerTimer();
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW BANNER
+========================================================= */
+
+function showBanner(index) {
+
+    const slides =
+        document.querySelectorAll(
+            ".banner-slide"
+        );
+
+    const dots =
+        document.querySelectorAll(
+            ".banner-dot"
+        );
+
+    if (!slides.length) {
+
+        return;
+
+    }
+
+    currentBanner =
+        (
+            Number(index) +
+            banners.length
+        ) %
+        banners.length;
+
+
+    slides.forEach(
+        slide => {
+
+            slide.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    dots.forEach(
+        dot => {
+
+            dot.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    if (slides[currentBanner]) {
+
+        slides[currentBanner]
+            .classList.add(
+                "active"
+            );
+
+    }
+
+
+    if (dots[currentBanner]) {
+
+        dots[currentBanner]
+            .classList.add(
+                "active"
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   NEXT BANNER
+========================================================= */
+
+function nextBanner() {
+
+    if (!banners.length) {
+
+        return;
+
+    }
+
+    showBanner(
+        currentBanner + 1
+    );
+
+    startBannerTimer();
+
+}
+
+
+/* =========================================================
+   PREVIOUS BANNER
+========================================================= */
+
+function previousBanner() {
+
+    if (!banners.length) {
+
+        return;
+
+    }
+
+    showBanner(
+        currentBanner - 1
+    );
+
+    startBannerTimer();
+
+}
+
+
+/* =========================================================
+   AUTO BANNER
+========================================================= */
+
+function startBannerTimer() {
+
+    clearInterval(
+        bannerTimer
+    );
+
+    if (
+        banners.length <= 1
+    ) {
+
+        return;
+
+    }
+
+    bannerTimer =
+        setInterval(
+            () => {
+
+                showBanner(
+                    currentBanner + 1
+                );
+
+            },
+            5000
+        );
+
+}
+
+
+/* =========================================================
+   LOAD PRODUCTS
+========================================================= */
+
+async function loadProducts() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/products"
+            );
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                "Failed to load products"
+            );
+
+        }
+
+
+        allProducts =
+            Array.isArray(
+                data.products
+            )
+            ? data.products
+            : [];
+
+
+        displayProducts(
+            getVisibleProducts()
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Product loading error:",
+            error
+        );
+
+
+        document.getElementById(
+            "productsGrid"
+        ).innerHTML = `
+
+            <div class="message">
+                Unable to load products.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD CATEGORIES
+========================================================= */
+
+async function loadCategories() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/categories"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                "Failed to load categories"
+            );
+
+        }
+
+
+        const container =
+            document.getElementById(
+                "categories"
+            );
+
+
+        /* Remove old dynamically created categories */
+
+        container
+            .querySelectorAll(
+                ".dynamic-category"
+            )
+            .forEach(
+                element =>
+                    element.remove()
+            );
+
+
+        const categories =
+            Array.isArray(
+                data.categories
+            )
+            ? data.categories
+            : [];
+
+
+        categories.forEach(
+            category => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "category-btn dynamic-category";
+
+
+                button.textContent =
+                    category.name;
+
+
+                button.onclick =
+                    function() {
+
+                        filterCategory(
+                            category.id,
+                            this
+                        );
+
+                    };
+
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Category error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GET VISIBLE PRODUCTS
+========================================================= */
+
+function getVisibleProducts() {
+
+    let products =
+        [...allProducts];
+
+
+    if (
+        selectedCategory !==
+        "all"
+    ) {
+
+        products =
+            products.filter(
+                product =>
+                    String(
+                        product.category_id
+                    ) ===
+                    String(
+                        selectedCategory
+                    )
+            );
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const search =
+        input
+            ? input.value.trim().toLowerCase()
+            : "";
+
+
+    if (search) {
+
+        products =
+            products.filter(
+                product => {
+
+                    return (
+
+                        String(
+                            product.name ||
+                            ""
+                        )
+                        .toLowerCase()
+                        .includes(search)
+
+                        ||
+
+                        String(
+                            product.description ||
+                            ""
+                        )
+                        .toLowerCase()
+                        .includes(search)
+
+                        ||
+
+                        String(
+                            product.category_name ||
+                            ""
+                        )
+                        .toLowerCase()
+                        .includes(search)
+
+                    );
+
+                }
+            );
+
+    }
+
+
+    return products;
+
+}
+
+
+/* =========================================================
+   DISPLAY PRODUCTS
+========================================================= */
+
+function displayProducts(
+    products
+) {
+
+    const grid =
+        document.getElementById(
+            "productsGrid"
+        );
+
+
+    if (
+        !products ||
+        products.length === 0
+    ) {
+
+        grid.innerHTML = `
+
+            <div class="message">
+                No products found.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML = "";
+
+
+    products.forEach(
+        product => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "product-card";
+
+
+            const outOfStock =
+                Number(
+                    product.stock
+                ) <= 0 ||
+                product.status ===
+                "out_of_stock";
+
+
+            let imageHTML;
+
+
+            if (
+                product.main_image
+            ) {
+
+                imageHTML = `
+
+                    <img
+                        src="${escapeWebsiteAttribute(
+                            product.main_image
+                        )}"
+                        class="product-image"
+                        alt="${escapeWebsiteAttribute(
+                            product.name ||
+                            "Product"
+                        )}"
+                    >
+
+                `;
+
+            } else {
+
+                imageHTML = `
+
+                    <div
+                        class="product-image"
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            color:#999;
+                        "
+                    >
+                        No Image
+                    </div>
+
+                `;
+
+            }
+
+
+            const currency =
+                websiteSettings.currency ||
+                "GHS";
+
+
+            card.innerHTML = `
+
+                <div
+                    class="product-click-area"
+                    onclick="openProduct(${Number(
+                        product.id
+                    )})"
+                >
+
+                    ${imageHTML}
+
+                    <div class="product-info">
+
+                        <div class="product-category">
+                            ${escapeHtml(
+                                product.category_name ||
+                                "Uncategorized"
+                            )}
+                        </div>
+
+
+                        <div class="product-name">
+                            ${escapeHtml(
+                                product.name ||
+                                "Unnamed Product"
+                            )}
+                        </div>
+
+
+                        <div class="product-price">
+
+                            ${escapeHtml(
+                                currency
+                            )}
+
+                            ${Number(
+                                product.price || 0
+                            ).toFixed(2)}
+
+                        </div>
+
+
+                        <div class="product-stock">
+
+                            ${
+                                outOfStock
+                                ? "Out of stock"
+                                : Number(
+                                    product.stock
+                                ) +
+                                  " available"
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:0 15px 15px;
+                    "
+                >
+
+                    <button
+                        type="button"
+                        class="add-cart-btn ${
+                            outOfStock
+                            ? "out-stock"
+                            : ""
+                        }"
+
+                        ${
+                            outOfStock
+                            ? "disabled"
+                            : ""
+                        }
+
+                        onclick="
+                            event.stopPropagation();
+                            addToCart(${Number(
+                                product.id
+                            )});
+                        "
+                    >
+
+                        ${
+                            outOfStock
+                            ? "Out of Stock"
+                            : "Add to Cart"
+                        }
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   OPEN PRODUCT
+========================================================= */
+
+function openProduct(
+    productId
+) {
+
+    window.location.href =
+        "/product.html?id=" +
+        encodeURIComponent(
+            productId
+        );
+
+}
+
+
+/* =========================================================
+   CATEGORY FILTER
+========================================================= */
+
+function filterCategory(
+    categoryId,
+    button
+) {
+
+    selectedCategory =
+        categoryId;
+
+
+    document
+        .querySelectorAll(
+            ".category-btn"
+        )
+        .forEach(
+            btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if (button) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    displayProducts(
+        getVisibleProducts()
+    );
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchProducts() {
+
+    displayProducts(
+        getVisibleProducts()
+    );
+
+}
+
+
+/* =========================================================
+   CART STORAGE
+========================================================= */
+
+function saveCart() {
+
+    localStorage.setItem(
+        "nedHubCart",
+        JSON.stringify(
+            cart
+        )
+    );
+
+}
+
+
+/* =========================================================
+   ADD TO CART
+========================================================= */
+
+function addToCart(
+    productId
+) {
+
+    const product =
+        allProducts.find(
+            item =>
+                Number(
+                    item.id
+                ) ===
+                Number(
+                    productId
+                )
+        );
+
+
+    if (!product) {
+
+        alert(
+            "Product not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        Number(product.stock) <= 0 ||
+        product.status ===
+        "out_of_stock"
+    ) {
+
+        alert(
+            "This product is out of stock."
+        );
+
+        return;
+
+    }
+
+
+    const existingItem =
+        cart.find(
+            item =>
+                Number(
+                    item.id
+                ) ===
+                Number(
+                    productId
+                )
+        );
+
+
+    if (existingItem) {
+
+        if (
+            Number(
+                existingItem.quantity
+            ) >=
+            Number(
+                product.stock
+            )
+        ) {
+
+            alert(
+                "You cannot add more than the available stock."
+            );
+
+            return;
+
+        }
+
+
+        existingItem.quantity++;
+
+    } else {
+
+        cart.push({
+
+            id:
+                product.id,
+
+            name:
+                product.name,
+
+            price:
+                Number(
+                    product.price || 0
+                ),
+
+            image:
+                product.main_image || "",
+
+            stock:
+                Number(
+                    product.stock || 0
+                ),
+
+            quantity:
+                1
+
+        });
+
+    }
+
+
+    saveCart();
+
+    updateCartCount();
+
+    displayCart();
+
+
+    alert(
+        product.name +
+        " added to cart."
+    );
+
+}
+
+
+/* =========================================================
+   CART COUNT
+========================================================= */
+
+function updateCartCount() {
+
+    const count =
+        cart.reduce(
+            (
+                total,
+                item
+            ) =>
+                total +
+                Number(
+                    item.quantity || 0
+                ),
+            0
+        );
+
+
+    const cartCount =
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    if (cartCount) {
+
+        cartCount.textContent =
+            count;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPLAY CART
+========================================================= */
+
+function displayCart() {
+
+    const container =
+        document.getElementById(
+            "cartContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    if (
+        !Array.isArray(cart) ||
+        cart.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="message">
+                Your cart is empty.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let subtotal = 0;
+
+
+    const currency =
+        websiteSettings.currency ||
+        "GHS";
+
+
+    let html = `
+        <div class="cart-box">
+    `;
+
+
+    cart.forEach(
+        item => {
+
+            const itemTotal =
+                Number(
+                    item.price || 0
+                ) *
+                Number(
+                    item.quantity || 0
+                );
+
+
+            subtotal +=
+                itemTotal;
+
+
+            html += `
+
+                <div class="cart-item">
+
+                    ${
+                        item.image
+                        ? `
+                            <img
+                                src="${escapeWebsiteAttribute(
+                                    item.image
+                                )}"
+                                class="cart-item-image"
+                                alt="${escapeWebsiteAttribute(
+                                    item.name
+                                )}"
+                            >
+                        `
+                        : `
+                            <div
+                                class="cart-item-image"
+                                style="
+                                    background:#eee;
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    color:#999;
+                                "
+                            >
+                                No Image
+                            </div>
+                        `
+                    }
+
+
+                    <div class="cart-item-info">
+
+                        <strong>
+                            ${escapeHtml(
+                                item.name
+                            )}
+                        </strong>
+
+
+                        <div
+                            style="
+                                margin-top:5px;
+                                color:var(--ned-muted);
+                            "
+                        >
+
+                            ${escapeHtml(
+                                currency
+                            )}
+
+                            ${Number(
+                                item.price || 0
+                            ).toFixed(2)}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quantity-controls">
+
+                        <button
+                            type="button"
+                            class="quantity-btn"
+                            onclick="
+                                changeQuantity(
+                                    ${Number(item.id)},
+                                    -1
+                                )
+                            "
+                        >
+                            −
+                        </button>
+
+
+                        <strong>
+                            ${Number(
+                                item.quantity
+                            )}
+                        </strong>
+
+
+                        <button
+                            type="button"
+                            class="quantity-btn plus"
+                            onclick="
+                                changeQuantity(
+                                    ${Number(item.id)},
+                                    1
+                                )
+                            "
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <strong
+                        style="
+                            min-width:100px;
+                            text-align:right;
+                        "
+                    >
+
+                        ${escapeHtml(
+                            currency
+                        )}
+
+                        ${itemTotal.toFixed(2)}
+
+                    </strong>
+
+
+                    <button
+                        type="button"
+                        class="remove-btn"
+                        onclick="
+                            removeFromCart(
+                                ${Number(item.id)}
+                            )
+                        "
+                    >
+                        Remove
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+        <div class="cart-summary">
+
+            <strong
+                style="
+                    font-size:20px;
+                "
+            >
+
+                Subtotal:
+
+                ${escapeHtml(
+                    currency
+                )}
+
+                ${subtotal.toFixed(2)}
+
+            </strong>
+
+
+            <button
+                type="button"
+                class="checkout-btn"
+                onclick="checkout()"
+            >
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+        </div>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   CHANGE QUANTITY
+========================================================= */
+
+function changeQuantity(
+    productId,
+    change
+) {
+
+    const item =
+        cart.find(
+            item =>
+                Number(
+                    item.id
+                ) ===
+                Number(
+                    productId
+                )
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const newQuantity =
+        Number(
+            item.quantity
+        ) +
+        Number(
+            change
+        );
+
+
+    if (
+        newQuantity <= 0
+    ) {
+
+        removeFromCart(
+            productId
+        );
+
+        return;
+
+    }
+
+
+    if (
+        newQuantity >
+        Number(
+            item.stock
+        )
+    ) {
+
+        alert(
+            "You cannot add more than the available stock."
+        );
+
+        return;
+
+    }
+
+
+    item.quantity =
+        newQuantity;
+
+
+    saveCart();
+
+    updateCartCount();
+
+    displayCart();
+
+}
+
+
+/* =========================================================
+   REMOVE FROM CART
+========================================================= */
+
+function removeFromCart(
+    productId
+) {
+
+    cart =
+        cart.filter(
+            item =>
+                Number(
+                    item.id
+                ) !==
+                Number(
+                    productId
+                )
+        );
+
+
+    saveCart();
+
+    updateCartCount();
+
+    displayCart();
+
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+function checkout() {
+
+    if (
+        cart.length === 0
+    ) {
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "/checkout.html";
+
+}
+
+
+/* =========================================================
+   LOGIN STATUS
+========================================================= */
+
+async function checkLoginStatus() {
+
+    const userArea =
+        document.getElementById(
+            "userArea"
+        );
+
+
+    if (!userArea) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/account",
+                {
+                    credentials:
+                        "include"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success &&
+            data.customer
+        ) {
+
+            userArea.innerHTML = `
+
+                <a
+                    href="/account.html"
+                >
+                    👤 Welcome,
+                    ${escapeHtml(
+                        data.customer.name
+                    )}
+                </a>
+
+
+                <button
+                    type="button"
+                    onclick="logoutUser()"
+                    style="
+                        border:none;
+                        background:none;
+                        color:white;
+                        cursor:pointer;
+                        margin-left:15px;
+                        font-size:14px;
+                    "
+                >
+                    Logout
+                </button>
+
+            `;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Login status error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logoutUser() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/logout",
+                {
+                    method:
+                        "POST",
+
+                    credentials:
+                        "include"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success
+        ) {
+
+            window.location.reload();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Logout failed."
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   WEBSITE SECTIONS
+========================================================= */
+
+async function loadWebsiteSections() {
+
+    const container =
+        document.getElementById(
+            "websiteSections"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/website-sections"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data.success ||
+            !Array.isArray(
+                data.sections
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            "";
+
+
+        data.sections.forEach(
+            (
+                section,
+                index
+            ) => {
+
+                const sectionElement =
+                    document.createElement(
+                        "section"
+                    );
+
+
+                sectionElement.className =
+                    "website-content-section";
+
+
+                const reverseClass =
+                    index % 2 === 1
+                        ? "reverse"
+                        : "";
+
+
+                sectionElement.innerHTML = `
+
+                    <div
+                        class="website-content-inner ${reverseClass}"
+                    >
+
+                        <div
+                            class="website-content-text"
+                        >
+
+                            ${
+                                section.title
+                                ? `
+                                    <h2>
+                                        ${escapeWebsiteHTML(
+                                            section.title
+                                        )}
+                                    </h2>
+                                `
+                                : ""
+                            }
+
+
+                            ${
+                                section.description
+                                ? `
+                                    <p>
+                                        ${escapeWebsiteHTML(
+                                            section.description
+                                        )}
+                                    </p>
+                                `
+                                : ""
+                            }
+
+
+                            ${
+                                section.button_text
+                                ? `
+                                    <a
+                                        href="${escapeWebsiteAttribute(
+                                            section.button_link ||
+                                            "#"
+                                        )}"
+                                        class="website-content-button"
+                                    >
+                                        ${escapeWebsiteHTML(
+                                            section.button_text
+                                        )}
+                                    </a>
+                                `
+                                : ""
+                            }
+
+                        </div>
+
+
+                        ${
+                            section.image
+                            ? `
+                                <div
+                                    class="website-content-image"
+                                >
+
+                                    <img
+                                        src="${escapeWebsiteAttribute(
+                                            section.image
+                                        )}"
+                                        alt="${escapeWebsiteAttribute(
+                                            section.title ||
+                                            "NED HUB"
+                                        )}"
+                                    >
+
+                                </div>
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(
+                    sectionElement
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Failed to load website sections:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   APPLY WEBSITE THEME
+   THIS IS THE ONLY THEME/COLOR METHOD
+========================================================= */
+
+function applyWebsiteTheme(
+    settings
+) {
+
+    const root =
+        document.documentElement;
+
+
+    /* =====================================================
+       MAIN COLORS
+    ===================================================== */
+
+    const colorSettings = {
+
+        "--ned-primary":
+            settings.primary_color,
+
+        "--ned-secondary":
+            settings.secondary_color,
+
+        "--ned-accent":
+            settings.accent_color,
+
+        "--ned-header":
+            settings.header_color,
+
+        "--ned-background":
+            settings.background_color,
+
+        "--ned-button":
+            settings.button_color ||
+            settings.primary_color,
+
+        "--ned-button-text":
+            settings.button_text_color,
+
+        "--ned-gradient-1":
+            settings.gradient_color_1,
+
+        "--ned-gradient-2":
+            settings.gradient_color_2,
+
+        "--ned-gradient-3":
+            settings.gradient_color_3
+
+    };
+
+
+    Object.entries(
+        colorSettings
+    ).forEach(
+        (
+            [
+                variable,
+                value
+            ]
+        ) => {
+
+            if (
+                value !== undefined &&
+                value !== null &&
+                String(value).trim() !== ""
+            ) {
+
+                root.style.setProperty(
+                    variable,
+                    String(value)
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       THEME MODE
+    ===================================================== */
+
+    let themeMode =
+        String(
+            settings.theme_mode ||
+            settings.default_theme ||
+            "light"
+        )
+        .toLowerCase()
+        .trim();
+
+
+    if (
+        ![
+            "light",
+            "dark"
+        ].includes(
+            themeMode
+        )
+    ) {
+
+        themeMode =
+            "light";
+
+    }
+
+
+    root.setAttribute(
+        "data-theme",
+        themeMode
+    );
+
+
+    /* =====================================================
+       THEME COLORS
+    ===================================================== */
+
+    if (
+        themeMode === "dark"
+    ) {
+
+        root.style.setProperty(
+            "--ned-text",
+            settings.text_color_dark ||
+            "#ffffff"
+        );
+
+        root.style.setProperty(
+            "--ned-card",
+            settings.card_color_dark ||
+            "#111827"
+        );
+
+        root.style.setProperty(
+            "--ned-border",
+            settings.border_color_dark ||
+            "#263244"
+        );
+
+        root.style.setProperty(
+            "--ned-muted",
+            settings.muted_color_dark ||
+            "#b8c0cc"
+        );
+
+    } else {
+
+        root.style.setProperty(
+            "--ned-text",
+            settings.text_color_light ||
+            "#111827"
+        );
+
+        root.style.setProperty(
+            "--ned-card",
+            settings.card_color_light ||
+            "#ffffff"
+        );
+
+        root.style.setProperty(
+            "--ned-border",
+            settings.border_color_light ||
+            "#eeeeee"
+        );
+
+        root.style.setProperty(
+            "--ned-muted",
+            settings.muted_color_light ||
+            "#555555"
+        );
+
+    }
+
+
+    /* =====================================================
+       GLOW
+    ===================================================== */
+
+    if (
+        settingIsTrue(
+            settings.glow_enabled
+        )
+    ) {
+
+        const glowColor =
+            settings.glow_color ||
+            settings.accent_color ||
+            settings.primary_color ||
+            "#0080ff";
+
+
+        root.style.setProperty(
+            "--ned-glow",
+            "0 0 20px " +
+            glowColor
+        );
+
+    } else {
+
+        root.style.setProperty(
+            "--ned-glow",
+            "none"
+        );
+
+    }
+
+
+    /* =====================================================
+       EFFECT INTENSITY
+    ===================================================== */
+
+    const intensity =
+        Number(
+            settings.effect_intensity
+        );
+
+
+    if (
+        Number.isFinite(
+            intensity
+        )
+    ) {
+
+        root.style.setProperty(
+            "--ned-effect-opacity",
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    intensity / 100
+                )
+            )
+        );
+
+    } else {
+
+        root.style.setProperty(
+            "--ned-effect-opacity",
+            "1"
+        );
+
+    }
+
+
+    /* =====================================================
+       GRADIENT SPEED
+    ===================================================== */
+
+    const gradientSpeed =
+        Number(
+            settings.gradient_speed
+        );
+
+
+    if (
+        Number.isFinite(
+            gradientSpeed
+        ) &&
+        gradientSpeed > 0
+    ) {
+
+        root.style.setProperty(
+            "--ned-gradient-speed",
+            gradientSpeed + "s"
+        );
+
+    }
+
+
+    /* =====================================================
+       ANIMATED BUTTONS
+    ===================================================== */
+
+    document.body.classList.toggle(
+        "ned-animated-buttons",
+        settingIsTrue(
+            settings.animated_buttons
+        )
+    );
+
+
+    /* =====================================================
+       ANIMATED HEADER
+    ===================================================== */
+
+    document.body.classList.toggle(
+        "ned-animated-header",
+        settingIsTrue(
+            settings.animated_header
+        )
+    );
+
+
+    /* =====================================================
+       GRADIENT ANIMATION
+    ===================================================== */
+
+    document.body.classList.toggle(
+        "ned-gradient-animation",
+        settingIsTrue(
+            settings.gradient_animation
+        )
+    );
+
+
+    /* =====================================================
+       FLOATING BLOBS
+    ===================================================== */
+
+    document.body.classList.toggle(
+        "ned-floating-blobs",
+        settingIsTrue(
+            settings.floating_blobs
+        )
+    );
+
+}
+
+
+/* =========================================================
+   APPLY STORE INFORMATION
+========================================================= */
+
+function applyStoreInformation(
+    settings
+) {
+
+    const storeName =
+        settings.header_store_name ||
+        settings.store_name ||
+        "NED HUB";
+
+
+    document
+        .querySelectorAll(
+            "[data-store-name]"
+        )
+        .forEach(
+            element => {
+
+                element.textContent =
+                    storeName;
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-store-tagline]"
+        )
+        .forEach(
+            element => {
+
+                element.textContent =
+                    settings.store_tagline ||
+                    "Your online shopping destination.";
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-store-phone]"
+        )
+        .forEach(
+            element => {
+
+                element.textContent =
+                    settings.store_phone ||
+                    "";
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-store-email]"
+        )
+        .forEach(
+            element => {
+
+                element.textContent =
+                    settings.store_email ||
+                    "";
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-store-address]"
+        )
+        .forEach(
+            element => {
+
+                element.textContent =
+                    settings.store_address ||
+                    "";
+
+            }
+        );
+
+
+    document.title =
+        storeName +
+        " | Shop";
+
+}
+
+
+/* =========================================================
+   APPLY LOGO
+========================================================= */
+
+function applyLogo(
+    settings
+) {
+
+    const logo =
+        document.querySelector(
+            ".logo"
+        );
+
+
+    if (!logo) {
+
+        return;
+
+    }
+
+
+    if (
+        !settings.logo_url
+    ) {
+
+        return;
+
+    }
+
+
+    logo.innerHTML = `
+
+        <img
+            src="${escapeWebsiteAttribute(
+                settings.logo_url
+            )}"
+            alt="${escapeWebsiteAttribute(
+                settings.store_name ||
+                "NED HUB"
+            )}"
+            style="
+                max-height:45px;
+                max-width:180px;
+                width:auto;
+                height:auto;
+                object-fit:contain;
+                display:block;
+            "
+        >
+
+    `;
+
+}
+
+
+/* =========================================================
+   APPLY SOCIAL LINKS
+========================================================= */
+
+function applySocialLinks(
+    settings
+) {
+
+    document
+        .querySelectorAll(
+            "[data-facebook]"
+        )
+        .forEach(
+            element => {
+
+                if (
+                    settings.facebook_url
+                ) {
+
+                    element.href =
+                        settings.facebook_url;
+
+                    element.style.display =
+                        "inline-flex";
+
+                } else {
+
+                    element.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-instagram]"
+        )
+        .forEach(
+            element => {
+
+                if (
+                    settings.instagram_url
+                ) {
+
+                    element.href =
+                        settings.instagram_url;
+
+                    element.style.display =
+                        "inline-flex";
+
+                } else {
+
+                    element.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-tiktok]"
+        )
+        .forEach(
+            element => {
+
+                if (
+                    settings.tiktok_url
+                ) {
+
+                    element.href =
+                        settings.tiktok_url;
+
+                    element.style.display =
+                        "inline-flex";
+
+                } else {
+
+                    element.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-whatsapp]"
+        )
+        .forEach(
+            element => {
+
+                const number =
+                    settings.whatsapp_number;
+
+
+                if (number) {
+
+                    const cleanNumber =
+                        String(
+                            number
+                        )
+                        .replace(
+                            /\D/g,
+                            ""
+                        );
+
+
+                    if (cleanNumber) {
+
+                        element.href =
+                            "https://wa.me/" +
+                            cleanNumber;
+
+                        element.style.display =
+                            "inline-flex";
+
+                    } else {
+
+                        element.style.display =
+                            "none";
+
+                    }
+
+                } else {
+
+                    element.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   APPLY VISIBILITY SETTINGS
+========================================================= */
+
+function applyVisibilitySettings(
+    settings
+) {
+
+    /* SEARCH */
+
+    document
+        .querySelectorAll(
+            ".search-box"
+        )
+        .forEach(
+            element => {
+
+                element.style.display =
+                    settingIsNo(
+                        settings.show_search
+                    )
+                    ? "none"
+                    : "";
+
+            }
+        );
+
+
+    /* CART BUTTON */
+
+    document
+        .querySelectorAll(
+            ".cart-btn"
+        )
+        .forEach(
+            element => {
+
+                element.style.display =
+                    settingIsNo(
+                        settings.show_cart
+                    )
+                    ? "none"
+                    : "";
+
+            }
+        );
+
+
+    /* ACCOUNT */
+
+    document
+        .querySelectorAll(
+            "#userArea"
+        )
+        .forEach(
+            element => {
+
+                element.style.display =
+                    settingIsNo(
+                        settings.show_account
+                    )
+                    ? "none"
+                    : "";
+
+            }
+        );
+
+
+    /* CART SECTION */
+
+    const cartSection =
+        document.getElementById(
+            "cart"
+        );
+
+
+    if (cartSection) {
+
+        cartSection.style.display =
+            settingIsNo(
+                settings.show_cart
+            )
+            ? "none"
+            : "";
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD WEBSITE SETTINGS
+========================================================= */
+
+async function loadWebsiteSettings() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/settings"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to connect to website settings."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data.success
+        ) {
+
+            console.error(
+                "Website settings error:",
+                data.message
+            );
+
+            return;
+
+        }
+
+
+        websiteSettings =
+            data.settings || {};
+
+
+        /* APPLY ALL SETTINGS */
+
+        applyWebsiteTheme(
+            websiteSettings
+        );
+
+
+        applyStoreInformation(
+            websiteSettings
+        );
+
+
+        applyLogo(
+            websiteSettings
+        );
+
+
+        applySocialLinks(
+            websiteSettings
+        );
+
+
+        applyVisibilitySettings(
+            websiteSettings
+        );
+
+
+        /* REFRESH CART */
+
+        displayCart();
+
+
+        /* REFRESH PRODUCTS */
+
+        if (
+            allProducts.length
+        ) {
+
+            displayProducts(
+                getVisibleProducts()
+            );
+
+        }
+
+
+        console.log(
+            "NED HUB website settings loaded successfully."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Website settings loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   INITIALIZE WEBSITE
+========================================================= */
+
+async function initializeNEDHub() {
+
+    updateCartCount();
+
+    displayCart();
+
+    await Promise.allSettled([
+
+        loadBanners(),
+
+        loadCategories(),
+
+        loadProducts(),
+
+        loadWebsiteSections(),
+
+        loadWebsiteSettings(),
+
+        checkLoginStatus()
+
+    ]);
+
+}
+
+
+/* =========================================================
+   SEARCH ENTER KEY
+========================================================= */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                event.preventDefault();
+
+                searchProducts();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initializeNEDHub();
+
+</script>
+
+
+<!-- =========================================================
+     SITE SETTINGS SCRIPT
+========================================================= -->
+
+<script src="/js/site-settings.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NED HUB - Admin Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0080ff, #00aaff);
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 34px;
+            font-weight: bold;
+            color: #0080ff;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #0080ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #0080ff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #006edc;
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .message.error {
+            display: block;
+            background: #ffe5e5;
+            color: #c00000;
+        }
+
+        .message.success {
+            display: block;
+            background: #e5ffe9;
+            color: #087a20;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #0080ff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">NED HUB</div>
+
+    <div class="subtitle">
+        Administrator Login
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <form id="adminLoginForm">
+
+        <div class="form-group">
+
+            <label for="email">
+                Admin Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter admin email"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                required
+            >
+
+        </div>
+
+        <button
+            type="submit"
+            id="loginButton"
+        >
+            Login to Admin
+        </button>
+
+    </form>
+
+    <a
+        href="/"
+        class="back-link"
+    >
+        ← Back to NED HUB
+    </a>
+
+</div>
+
+<script>
+
+const form =
+    document.getElementById("adminLoginForm");
+
+const message =
+    document.getElementById("message");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    message.className = "message";
+    message.textContent = "";
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Logging in...";
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/login",
+            {
+                method: "POST",
+                credentials: "include",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success) {
+
+            message.className =
+                "message error";
+
+            message.textContent =
+                data.message ||
+                "Invalid email or password.";
+
+            loginButton.disabled = false;
+            loginButton.textContent =
+                "Login to Admin";
+
+            return;
+        }
+
+        message.className =
+            "message success";
+
+        message.textContent =
+            "Login successful. Redirecting...";
+
+        setTimeout(function() {
+
+            window.location.href =
+                "/admin/";
+
+        }, 500);
+
+    } catch (error) {
+
+        console.error(
+            "Admin login error:",
+            error
+        );
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Unable to connect to the server.";
+
+        loginButton.disabled = false;
+
+        loginButton.textContent =
+            "Login to Admin";
+    }
+
+});
+
+</script>
+<script src="/admin/js/admin-sidebar.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Customer Care - NED HUB</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        color: #222;
+        min-height: 100vh;
+    }
+
+    header {
+        background: #0b5ed7;
+        color: white;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    .back-btn {
+        color: white;
+        text-decoration: none;
+        background: rgba(255,255,255,0.15);
+        padding: 9px 14px;
+        border-radius: 8px;
+    }
+
+    .chat-container {
+        width: 95%;
+        max-width: 850px;
+        height: calc(100vh - 110px);
+        margin: 20px auto;
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .chat-header {
+        padding: 18px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .chat-header h2 {
+        font-size: 19px;
+        margin-bottom: 5px;
+    }
+
+    .chat-header p {
+        color: #777;
+        font-size: 14px;
+    }
+
+    #messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #f8fafc;
+    }
+
+    .message {
+        display: flex;
+        margin-bottom: 14px;
+    }
+
+    .message.customer {
+        justify-content: flex-end;
+    }
+
+    .message.admin {
+        justify-content: flex-start;
+    }
+
+    .bubble {
+        max-width: 75%;
+        padding: 11px 14px;
+        border-radius: 14px;
+        word-wrap: break-word;
+    }
+
+    .customer .bubble {
+        background: #0b5ed7;
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+
+    .admin .bubble {
+        background: white;
+        color: #222;
+        border: 1px solid #ddd;
+        border-bottom-left-radius: 4px;
+    }
+
+    .sender {
+        font-size: 11px;
+        font-weight: bold;
+        margin-bottom: 4px;
+        opacity: 0.7;
+    }
+
+    .time {
+        font-size: 10px;
+        margin-top: 5px;
+        opacity: 0.7;
+    }
+
+    .empty {
+        text-align: center;
+        color: #888;
+        padding: 40px 10px;
+    }
+
+    .login-message {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .login-message a {
+        display: inline-block;
+        margin-top: 15px;
+        background: #0b5ed7;
+        color: white;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+    }
+
+    .input-area {
+        padding: 14px;
+        border-top: 1px solid #ddd;
+        background: white;
+        display: flex;
+        gap: 10px;
+    }
+
+    #messageInput {
+        flex: 1;
+        resize: none;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 15px;
+        outline: none;
+        min-height: 45px;
+        max-height: 120px;
+    }
+
+    #messageInput:focus {
+        border-color: #0b5ed7;
+    }
+
+    #sendBtn {
+        border: none;
+        background: #0b5ed7;
+        color: white;
+        padding: 0 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    #sendBtn:hover {
+        background: #084db2;
+    }
+
+    #sendBtn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .status {
+        text-align: center;
+        font-size: 13px;
+        color: #777;
+        padding: 6px;
+    }
+
+    @media (max-width: 600px) {
+        .chat-container {
+            width: 100%;
+            height: calc(100vh - 75px);
+            margin: 0;
+            border-radius: 0;
+        }
+
+        header {
+            padding: 14px;
+        }
+
+        .bubble {
+            max-width: 85%;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h1>💬 NED HUB Customer Care</h1>
+    <a href="/account.html" class="back-btn">← Account</a>
+</header>
+
+<div class="chat-container">
+
+```
+<div class="chat-header">
+    <h2>Chat with NED HUB</h2>
+    <p>Send us a message and our admin will respond to you.</p>
+</div>
+
+<div id="messages">
+    <div class="empty">Loading messages...</div>
+</div>
+
+<div id="status" class="status"></div>
+
+<div class="input-area">
+    <textarea
+        id="messageInput"
+        placeholder="Type your message..."
+        maxlength="2000"
+    ></textarea>
+
+    <button id="sendBtn">Send</button>
+</div>
+```
+
+</div>
+
+<script>
+    const messagesBox = document.getElementById("messages");
+    const messageInput = document.getElementById("messageInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const statusBox = document.getElementById("status");
+
+    let loading = false;
+
+    function escapeHTML(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function formatTime(dateString) {
+        const date = new Date(dateString);
+
+        if (isNaN(date.getTime())) {
+            return "";
+        }
+
+        return date.toLocaleString([], {
+            dateStyle: "short",
+            timeStyle: "short"
+        });
+    }
+
+    async function loadMessages() {
+        try {
+            const response = await fetch("/api/customer-care/messages", {
+                credentials: "include"
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401) {
+                messagesBox.innerHTML = `
+                    <div class="login-message">
+                        <h3>Please login first</h3>
+                        <p>You need a NED HUB customer account to use Customer Care.</p>
+                        <a href="/login.html">Login</a>
+                    </div>
+                `;
+
+                messageInput.disabled = true;
+                sendBtn.disabled = true;
+                return;
+            }
+
+            if (!data.success) {
+                messagesBox.innerHTML = `
+                    <div class="empty">
+                        Unable to load messages.
+                    </div>
+                `;
+                return;
+            }
+
+            displayMessages(data.messages || []);
+
+            // Mark admin messages as read
+            await fetch("/api/customer-care/read", {
+                method: "PUT",
+                credentials: "include"
+            });
+
+        } catch (error) {
+            console.error(error);
+
+            messagesBox.innerHTML = `
+                <div class="empty">
+                    Unable to connect to NED HUB.
+                </div>
+            `;
+        }
+    }
+
+    function displayMessages(messages) {
+
+        if (!messages.length) {
+            messagesBox.innerHTML = `
+                <div class="empty">
+                    <h3>No messages yet</h3>
+                    <p>Send a message to contact NED HUB Customer Care.</p>
+                </div>
+            `;
+            return;
+        }
+
+        messagesBox.innerHTML = "";
+
+        messages.forEach(message => {
+
+            const wrapper = document.createElement("div");
+
+            wrapper.className =
+                "message " +
+                (message.sender_type === "customer"
+                    ? "customer"
+                    : "admin");
+
+            const sender =
+                message.sender_type === "customer"
+                    ? "You"
+                    : "NED HUB Admin";
+
+            wrapper.innerHTML = `
+                <div class="bubble">
+                    <div class="sender">${sender}</div>
+
+                    <div>
+                        ${escapeHTML(message.message)}
+                    </div>
+
+                    <div class="time">
+                        ${formatTime(message.created_at)}
+                    </div>
+                </div>
+            `;
+
+            messagesBox.appendChild(wrapper);
+        });
+
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+
+        const message = messageInput.value.trim();
+
+        if (!message || loading) {
+            return;
+        }
+
+        loading = true;
+        sendBtn.disabled = true;
+        statusBox.textContent = "Sending...";
+
+        try {
+
+            const response = await fetch(
+                "/api/customer-care/messages",
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.status === 401) {
+                alert("Please login first.");
+                window.location.href = "/login.html";
+                return;
+            }
+
+            if (!data.success) {
+                alert(data.message || "Unable to send message.");
+                return;
+            }
+
+            messageInput.value = "";
+            statusBox.textContent = "";
+
+            await loadMessages();
+
+        } catch (error) {
+
+            console.error(error);
+            alert("Unable to send message. Please try again.");
+
+        } finally {
+
+            loading = false;
+            sendBtn.disabled = false;
+        }
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    messageInput.addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+
+    });
+
+    // Initial load
+    loadMessages();
+
+    // Check for new admin messages every 5 seconds
+    setInterval(loadMessages, 5000);
+</script>
+
+</body>
+</html>

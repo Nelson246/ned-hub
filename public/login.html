@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - NED HUB</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0080ff, #00aaff);
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 16px;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.20);
+        }
+
+        .logo {
+            text-align: center;
+
+            font-size: 32px;
+            font-weight: bold;
+
+            color: #0080ff;
+
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            text-align: center;
+
+            margin: 0 0 25px;
+
+            color: #222;
+        }
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 14px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            margin-bottom: 18px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #0080ff;
+
+            box-shadow: 0 0 0 2px rgba(0, 128, 255, 0.10);
+        }
+
+        .login-button {
+            width: 100%;
+
+            padding: 14px;
+
+            background: #0080ff;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background: #006bd6;
+        }
+
+        /* FORGOT PASSWORD */
+        .forgot-password {
+            display: block;
+
+            width: 100%;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #0080ff;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            visibility: visible;
+
+            opacity: 1;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .register-link {
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #666;
+        }
+
+        .register-link a {
+            color: #0080ff;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            display: none;
+
+            margin-bottom: 18px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            text-align: center;
+        }
+
+        .error {
+            display: block;
+
+            background: #ffeaea;
+
+            color: #b00020;
+        }
+
+        .success {
+            display: block;
+
+            background: #e8f8ee;
+
+            color: #16743b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-card">
+
+    <div class="logo">
+        NED HUB
+    </div>
+
+    <h2>
+        Login to your account
+    </h2>
+
+    <div id="message" class="message"></div>
+
+    <form id="loginForm">
+
+        <label for="email">
+            Email Address
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+        >
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+        >
+
+        <button
+            type="submit"
+            class="login-button"
+        >
+            Login
+        </button>
+
+    </form>
+
+    <!-- FORGOT PASSWORD -->
+    <a
+        href="/forgot-password.html"
+        class="forgot-password"
+    >
+        Forgot your password?
+    </a>
+
+    <div class="register-link">
+        Don't have an account?
+        <a href="/register.html">
+            Create Account
+        </a>
+    </div>
+
+</div>
+
+
+<script>
+    const loginForm = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        message.className = "message";
+
+        if (!email || !password) {
+            message.className = "message error";
+            message.textContent = "Please enter your email and password.";
+            return;
+        }
+
+        message.textContent = "Logging in...";
+
+        try {
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                message.className = "message error";
+                message.textContent =
+                    data.message || "Incorrect email or password.";
+                return;
+            }
+
+            message.className = "message success";
+            message.textContent = "Login successful!";
+
+            const returnUrl = localStorage.getItem("nedHubReturnUrl");
+
+            if (returnUrl) {
+                localStorage.removeItem("nedHubReturnUrl");
+                window.location.href = returnUrl;
+            } else {
+                window.location.href = "/";
+            }
+
+        } catch (error) {
+            console.error("Login error:", error);
+
+            message.className = "message error";
+            message.textContent =
+                "Unable to connect to the server. Please try again.";
+        }
+    });
+</script>
+
+</body>
+</html>

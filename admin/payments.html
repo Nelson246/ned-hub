@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NED HUB - Payments</title>
+
+    <!-- SHARED ADMIN CSS -->
+    <link rel="stylesheet" href="/admin/css/admin.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            height: 65px;
+
+            background: #0b2d5c;
+            color: white;
+
+            padding: 0 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-left: 250px;
+            width: calc(100% - 250px);
+
+            position: relative;
+            z-index: 999;
+        }
+
+        .header h1 {
+            font-size: 21px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.12);
+
+            color: white;
+            text-decoration: none;
+
+            padding: 9px 14px;
+
+            border-radius: 8px;
+
+            transition: 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #174b8c;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: calc(100% - 250px);
+
+            max-width: none;
+
+            margin: 0 0 0 250px;
+
+            padding: 30px;
+        }
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+        }
+
+        .stat-card h3 {
+
+            font-size: 14px;
+
+            color: #666;
+
+            margin-bottom: 10px;
+        }
+
+        .number {
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+           TOOLBAR
+        ========================= */
+
+        .toolbar {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .toolbar input,
+        .toolbar select {
+
+            padding: 12px;
+
+            border:
+                1px solid #ddd;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+        }
+
+        .toolbar input {
+
+            flex: 1;
+
+            min-width: 250px;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-container {
+
+            background: white;
+
+            border-radius: 10px;
+
+            overflow-x: auto;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1100px;
+        }
+
+        th,
+        td {
+
+            padding: 15px;
+
+            text-align: left;
+
+            border-bottom:
+                1px solid #eee;
+        }
+
+        th {
+
+            background: #f8fafc;
+
+            font-size: 14px;
+        }
+
+        td {
+
+            font-size: 14px;
+        }
+
+        tr:hover {
+
+            background: #f9fafb;
+        }
+
+        .customer-name {
+
+            font-weight: bold;
+        }
+
+        .customer-email {
+
+            color: #666;
+
+            margin-top: 4px;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .status-paid {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        .status-pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+        .status-failed {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+        .status-refunded {
+
+            background: #e0e7ff;
+
+            color: #3730a3;
+        }
+
+        .amount {
+
+            font-weight: bold;
+        }
+
+        .empty {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #666;
+        }
+
+        .loading {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #666;
+        }
+
+        .error {
+
+            color: #dc2626;
+
+            text-align: center;
+
+            padding: 30px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 900px) {
+
+            .header {
+
+                margin-left: 210px;
+
+                width:
+                    calc(100% - 210px);
+            }
+
+            .container {
+
+                width:
+                    calc(100% - 210px);
+
+                margin-left: 210px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                margin-left: 0;
+
+                width: 100%;
+
+                padding: 0 15px;
+            }
+
+            .header h1 {
+
+                font-size: 18px;
+            }
+
+            .container {
+
+                width: 100%;
+
+                margin-left: 0;
+
+                padding: 15px;
+            }
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+            .back-btn {
+
+                padding: 8px 10px;
+
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SHARED ADMIN SIDEBAR
+    ========================= -->
+
+    <aside
+        class="sidebar"
+        id="adminSidebar"
+    ></aside>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="header">
+
+        <h1>
+            NED HUB - Payments
+        </h1>
+
+        <a
+            href="/admin/"
+            class="back-btn"
+        >
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <div class="container">
+
+
+        <!-- =========================
+             STATISTICS
+        ========================= -->
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <h3>
+                    Total Payments
+                </h3>
+
+                <div
+                    class="number"
+                    id="totalPayments"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>
+                    Paid
+                </h3>
+
+                <div
+                    class="number"
+                    id="paidPayments"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>
+                    Pending
+                </h3>
+
+                <div
+                    class="number"
+                    id="pendingPayments"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>
+                    Total Paid
+                </h3>
+
+                <div
+                    class="number"
+                    id="totalPaid"
+                >
+                    GHS 0.00
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH / FILTER
+        ========================= -->
+
+        <div class="toolbar">
+
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by order, reference, name or email..."
+            >
+
+
+            <select
+                id="statusFilter"
+            >
+
+                <option value="all">
+                    All Payments
+                </option>
+
+                <option value="Paid">
+                    Paid
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Failed">
+                    Failed
+                </option>
+
+                <option value="Refunded">
+                    Refunded
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+        <!-- =========================
+             PAYMENT TABLE
+        ========================= -->
+
+        <div class="table-container">
+
+
+            <div
+                id="loading"
+                class="loading"
+            >
+                Loading payments...
+            </div>
+
+
+            <table
+                id="paymentsTable"
+                style="display:none;"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Order
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Reference
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Method
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Paid At
+                        </th>
+
+                        <th>
+                            Created
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="paymentsBody"
+                ></tbody>
+
+            </table>
+
+
+            <div
+                id="emptyMessage"
+                class="empty"
+                style="display:none;"
+            >
+                No payments found.
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         PAYMENT JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        // =========================
+        // DATA
+        // =========================
+
+        let payments = [];
+
+
+        // =========================
+        // LOAD PAYMENTS
+        // =========================
+
+        async function loadPayments() {
+
+            const loading =
+                document.getElementById(
+                    "loading"
+                );
+
+            const table =
+                document.getElementById(
+                    "paymentsTable"
+                );
+
+            const empty =
+                document.getElementById(
+                    "emptyMessage"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/admin/payments",
+                        {
+                            credentials: "include"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Failed to load payments."
+                    );
+
+                }
+
+
+                payments =
+                    data.payments || [];
+
+
+                updateStatistics();
+
+                displayPayments();
+
+
+                loading.style.display =
+                    "none";
+
+
+                if (
+                    payments.length === 0
+                ) {
+
+                    table.style.display =
+                        "none";
+
+                    empty.style.display =
+                        "block";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Payments error:",
+                    error
+                );
+
+
+                loading.innerHTML = `
+                    <div class="error">
+                        Failed to load payments.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        // =========================
+        // STATISTICS
+        // =========================
+
+        function updateStatistics() {
+
+            const total =
+                payments.length;
+
+
+            let paid = 0;
+
+            let pending = 0;
+
+            let totalPaid = 0;
+
+
+            payments.forEach(
+                payment => {
+
+
+                    const status =
+                        String(
+                            payment.status ||
+                            ""
+                        ).toLowerCase();
+
+
+                    const amount =
+                        Number(
+                            payment.amount || 0
+                        );
+
+
+                    if (
+                        status === "paid"
+                    ) {
+
+                        paid++;
+
+                        totalPaid += amount;
+
+                    }
+
+
+                    if (
+                        status === "pending"
+                    ) {
+
+                        pending++;
+
+                    }
+
+                }
+            );
+
+
+            document.getElementById(
+                "totalPayments"
+            ).textContent =
+                total;
+
+
+            document.getElementById(
+                "paidPayments"
+            ).textContent =
+                paid;
+
+
+            document.getElementById(
+                "pendingPayments"
+            ).textContent =
+                pending;
+
+
+            document.getElementById(
+                "totalPaid"
+            ).textContent =
+                "GHS " +
+                totalPaid.toFixed(2);
+
+        }
+
+
+        // =========================
+        // DISPLAY PAYMENTS
+        // =========================
+
+        function displayPayments() {
+
+
+            const tbody =
+                document.getElementById(
+                    "paymentsBody"
+                );
+
+
+            const search =
+                document.getElementById(
+                    "searchInput"
+                )
+                .value
+                .trim()
+                .toLowerCase();
+
+
+            const filter =
+                document.getElementById(
+                    "statusFilter"
+                ).value;
+
+
+            const filtered =
+                payments.filter(
+                    payment => {
+
+
+                        const orderId =
+                            String(
+                                payment.order_id ||
+                                ""
+                            );
+
+
+                        const reference =
+                            String(
+                                payment.reference ||
+                                ""
+                            );
+
+
+                        const name =
+                            String(
+                                payment.customer_name ||
+                                ""
+                            );
+
+
+                        const email =
+                            String(
+                                payment.customer_email ||
+                                ""
+                            );
+
+
+                        const matchesSearch =
+
+                            orderId
+                                .toLowerCase()
+                                .includes(search)
+
+                            ||
+
+                            reference
+                                .toLowerCase()
+                                .includes(search)
+
+                            ||
+
+                            name
+                                .toLowerCase()
+                                .includes(search)
+
+                            ||
+
+                            email
+                                .toLowerCase()
+                                .includes(search);
+
+
+                        const matchesFilter =
+
+                            filter === "all"
+
+                            ||
+
+                            String(
+                                payment.status ||
+                                ""
+                            ) === filter;
+
+
+                        return (
+                            matchesSearch &&
+                            matchesFilter
+                        );
+
+                    }
+                );
+
+
+            tbody.innerHTML = "";
+
+
+            if (
+                filtered.length === 0
+            ) {
+
+                document.getElementById(
+                    "paymentsTable"
+                ).style.display =
+                    "none";
+
+
+                document.getElementById(
+                    "emptyMessage"
+                ).style.display =
+                    "block";
+
+
+                return;
+
+            }
+
+
+            document.getElementById(
+                "paymentsTable"
+            ).style.display =
+                "table";
+
+
+            document.getElementById(
+                "emptyMessage"
+            ).style.display =
+                "none";
+
+
+            filtered.forEach(
+                payment => {
+
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    const status =
+                        String(
+                            payment.status ||
+                            "Pending"
+                        );
+
+
+                    let statusClass =
+                        "status-pending";
+
+
+                    if (
+                        status.toLowerCase()
+                        === "paid"
+                    ) {
+
+                        statusClass =
+                            "status-paid";
+
+                    }
+
+
+                    if (
+                        status.toLowerCase()
+                        === "failed"
+                    ) {
+
+                        statusClass =
+                            "status-failed";
+
+                    }
+
+
+                    if (
+                        status.toLowerCase()
+                        === "refunded"
+                    ) {
+
+                        statusClass =
+                            "status-refunded";
+
+                    }
+
+
+                    const amount =
+                        Number(
+                            payment.amount || 0
+                        ).toFixed(2);
+
+
+                    const paidAt =
+                        payment.paid_at
+                            ? new Date(
+                                payment.paid_at
+                            ).toLocaleString()
+                            : "-";
+
+
+                    const createdAt =
+                        payment.created_at
+                            ? new Date(
+                                payment.created_at
+                            ).toLocaleString()
+                            : "-";
+
+
+                    row.innerHTML = `
+
+                        <td>
+                            #${escapeHtml(payment.id)}
+                        </td>
+
+
+                        <td>
+                            #${escapeHtml(payment.order_id)}
+                        </td>
+
+
+                        <td>
+
+                            <div
+                                class="customer-name"
+                            >
+                                ${escapeHtml(
+                                    payment.customer_name ||
+                                    "Unknown"
+                                )}
+                            </div>
+
+                            <div
+                                class="customer-email"
+                            >
+                                ${escapeHtml(
+                                    payment.customer_email ||
+                                    "-"
+                                )}
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                payment.reference ||
+                                "-"
+                            )}
+                        </td>
+
+
+                        <td class="amount">
+
+                            GHS ${amount}
+
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                payment.method ||
+                                "-"
+                            )}
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="status ${statusClass}"
+                            >
+                                ${escapeHtml(
+                                    status
+                                )}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(paidAt)}
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(createdAt)}
+                        </td>
+
+                    `;
+
+
+                    tbody.appendChild(row);
+
+                }
+            );
+
+        }
+
+
+        // =========================
+        // SEARCH
+        // =========================
+
+        document.getElementById(
+            "searchInput"
+        ).addEventListener(
+            "input",
+            displayPayments
+        );
+
+
+        // =========================
+        // STATUS FILTER
+        // =========================
+
+        document.getElementById(
+            "statusFilter"
+        ).addEventListener(
+            "change",
+            displayPayments
+        );
+
+
+        // =========================
+        // ESCAPE HTML
+        // =========================
+
+        function escapeHtml(value) {
+
+            return String(value)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        // =========================
+        // START
+        // =========================
+
+        loadPayments();
+
+    </script>
+
+
+    <!-- SHARED ADMIN SIDEBAR -->
+    <script src="/admin/js/admin-sidebar.js"></script>
+
+
+</body>
+
+</html>
